@@ -1,0 +1,13 @@
+{
+  "name": "KUASAL",
+  "version": "0.0.1",
+  "description": "Kyoto University Authentication System Auto Login",
+  "main": "index.js",
+  "repository": "git@github.com:E011011101001/KUASAL",
+  "author": "Eol <eol@eolstudy.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.11.0"
+  },
+  "packageManager": "yarn@4.1.1"
+}
