@@ -3,4 +3,5 @@ node_modules/
 .pnp.loader.mjs
 .yarn/
 yarn.lock
+.vscode/
 

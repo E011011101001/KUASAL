@@ -7,19 +7,85 @@
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e2s2
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM_registerMenuCommand
+// @grant        GM.setValue
+// @grant        GM.getValue
 // ==/UserScript==
 
-(function() {
-    'use strict';
-    const menu_command_id_1 = GM_registerMenuCommand("Show Alert", function(event) {
-      alert("Menu item selected");
-    }, {
-      accessKey: "a",
-      autoClose: true
-    });
+// Using GM global variables: id, password
+(async function () {
+  'use strict'
 
-    const menu_command_id_2 = GM_registerMenuCommand("Log", function(event) {
-      console.log("Menu item selected");
-    }, "l");
-    // Your code here...
-})();
+  async function register_menu () {
+    const configBox = document.createElement('div')
+    configBox.id = 'config-box'
+    configBox.innerHTML = `<div>
+      <div class="KUASAL-input-container">
+        <label for="KUASAL-user-id" style="min-width: 6vw;">User ID</label>
+        <input id="KUASAL-user-id" size="20" type="text" style="border-radius: 5px;" />
+      </div>
+      <div class="KUASAL-input-container">
+        <label for="KUASAL-password">Password</label>
+        <input id="KUASAL-password" size="20" type="password" style="border-radius: 5px;" />
+      </div>
+    </div>`
+
+    const inputID = configBox.querySelector('#KUASAL-user-id')
+    inputID.value = await GM.getValue('id') || ''
+    inputID.addEventListener('change', event => {
+      GM.setValue('id', event.target.value)
+    })
+
+    const inputPassword = configBox.querySelector('#KUASAL-password')
+    inputPassword.value = await GM.getValue('password') || ''
+    inputPassword.addEventListener('change', event => {
+      GM.setValue('password', event.target.value)
+    })
+
+    const configBoxStyle = document.createElement('style')
+    configBoxStyle.textContent = `#${configBox.id} {
+      inset: 0;
+      margin: auto;
+      position: fixed;
+      width: 30%;
+      min-width: 350px;
+      max-width: 450px;
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(25,25,25,0.94);
+      border: solid;
+      border-color: black;
+      box-shadow: black 2px 2px 6px 1px;
+      color: white;
+      font-size: small;
+    }
+    #${configBox.id} label {
+      color: white;
+    }
+    .KUASAL-input-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1%;
+    }`
+
+    document.head.appendChild(configBoxStyle)
+
+    let menuShown = false
+    GM.registerMenuCommand('Toggle Configuration', async function () {
+      if (!menuShown) {
+        document.body.appendChild(configBox)
+        menuShown = true
+      } else {
+        document.body.removeChild(configBox)
+        menuShown = false
+      }
+    })
+  }
+
+  await register_menu()
+  if (document.title === 'PandA : Gateway : Welcome') {
+    location.href += 'login'
+  }
+})()
