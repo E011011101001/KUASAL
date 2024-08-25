@@ -7,7 +7,12 @@ module.exports = {
     ecmaVersion: 2021
   },
   rules: {
-    'no-console': 'warn',
+    'no-console': [
+      'warn',
+      {
+        allow: ['error']
+      }
+    ],
     'no-debugger': 'warn',
     'no-unused-vars': [
       'warn',
@@ -52,6 +57,9 @@ module.exports = {
         after: true
       }
     ],
-    'eol-last': ['warn', 'always']
+    'eol-last': ['warn', 'always'],
+    'prefer-const': 'error',
+    'no-restricted-syntax': ['error', 'IfStatement[consequent.type!="BlockStatement"]'],
+    quotes: ['error', 'single']
   }
 }
