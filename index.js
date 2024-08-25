@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024-05-02.1
+// @version      2024-08-26
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e2s2
@@ -88,8 +88,12 @@
   if (document.title === 'PandA : Gateway : Welcome') {
     location.href += '/login'
   } else if (document.title === 'CyberLearningService Login') {
-    document.querySelector('#username').value = await GM.getValue('id')
-    document.querySelector('#password').value = await GM.getValue('password')
-    document.querySelector('.btn-submit').click()
+    const id = await GM.getValue('id')
+    const password = await GM.getValue('password')
+    if (id && password) {
+      document.querySelector('#username').value = id
+      document.querySelector('#password').value = password
+      document.querySelector('.btn-submit').click()
+    }
   }
 })()
