@@ -86,6 +86,10 @@
 
   await register_menu()
   if (document.title === 'PandA : Gateway : Welcome') {
-    location.href += 'login'
+    location.href += '/login'
+  } else if (document.title === 'CyberLearningService Login') {
+    document.querySelector('#username').value = await GM.getValue('id')
+    document.querySelector('#password').value = await GM.getValue('password')
+    document.querySelector('.btn-submit').click()
   }
 })()
