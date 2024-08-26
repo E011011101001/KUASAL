@@ -22,7 +22,7 @@
     configBox.id = 'config-box'
     configBox.innerHTML = `<div>
       <div class="KUASAL-input-container">
-        <label for="KUASAL-user-id" style="min-width: 6vw;">User ID</label>
+        <label for="KUASAL-user-id" style="width: 10vw;">User ID</label>
         <input id="KUASAL-user-id" size="20" type="text" style="border-radius: 5px;" />
       </div>
       <div class="KUASAL-input-container">
@@ -49,6 +49,9 @@
     inputPassword.addEventListener('change', event => {
       GM.setValue('password', event.target.value)
     })
+
+    configBox.querySelector('.KUASAL-button')
+      .addEventListener('click', _ => document.body.removeChild(configBox))
 
     const styleElement = document.createElement('style')
     styleElement.textContent = `
@@ -88,7 +91,7 @@
         border: solid;
         border-radius: 10px;
         border-width: 1px;
-        border-color: white;
+        border-color: darkgray;
       }
       .KUASAL-button:hover {
         background: lightgray;
@@ -98,7 +101,6 @@
         border-color: lightgray;
       }
     `
-
     document.head.appendChild(styleElement)
 
     GM.registerMenuCommand('Toggle Configuration', async function () {
