@@ -29,6 +29,9 @@
         <label for="KUASAL-password">Password</label>
         <input id="KUASAL-password" size="20" type="password" style="border-radius: 5px;" />
       </div>
+    </div>
+    <div>
+      <div class="KUASAL-button">Confirm</div>
     </div>`
 
     const inputID = configBox.querySelector('#KUASAL-user-id')
@@ -48,49 +51,68 @@
     })
 
     const styleElement = document.createElement('style')
-    styleElement.textContent = `#${configBox.id} {
-      inset: 0;
-      margin: auto;
-      position: fixed;
-      width: 30%;
-      min-width: 350px;
-      max-width: 450px;
-      height: 15%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(25,25,25,0.94);
-      border: solid;
-      border-color: black;
-      box-shadow: black 2px 2px 6px 1px;
-      color: white;
-      font-size: small;
-    }
-    #${configBox.id} label {
-      color: white;
-    }
-    .KUASAL-input-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1%;
-    }`
+    styleElement.textContent = `
+      #${configBox.id} {
+        inset: 0;
+        margin: auto;
+        position: fixed;
+        width: 30%;
+        min-width: 350px;
+        max-width: 450px;
+        height: 15%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: rgba(25,25,25,0.94);
+        border: solid;
+        border-color: black;
+        box-shadow: black 2px 2px 6px 1px;
+        font-size: small;
+      }
+      #${configBox.id} label {
+        color: lightgray;
+      }
+      .KUASAL-input-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1%;
+      }
+      .KUASAL-button {
+        background: darkgray;
+        color: black;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        box-shadow: black 0px 0px 5px 2px;
+        border: solid;
+        border-radius: 10px;
+        border-width: 1px;
+        border-color: white;
+      }
+      .KUASAL-button:hover {
+        background: lightgray;
+      }
+      .KUASAL-button:active {
+        box-shadow: none;
+        border-color: lightgray;
+      }
+    `
 
     document.head.appendChild(styleElement)
 
-    let menuShown = false
     GM.registerMenuCommand('Toggle Configuration', async function () {
+      const menuShown = configBox.parentNode === document.body
       if (!menuShown) {
         document.body.appendChild(configBox)
-        menuShown = true
       } else {
         document.body.removeChild(configBox)
-        menuShown = false
       }
     })
   }
 
   await register_menu()
+
   if (document.title === 'PandA : Gateway : Welcome') {
     location.href += '/login'
   } else if (document.title === 'CyberLearningService Login') {
