@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.08.26
+// @version      2024.08.26-dev
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO*
@@ -32,6 +32,10 @@
     </div>`
 
     const inputID = configBox.querySelector('#KUASAL-user-id')
+    if (!inputID) {
+      console.error('KUASAL: config box #KUASAL-user-id not found.')
+      return
+    }
     inputID.value = await GM.getValue('id') || ''
     inputID.addEventListener('change', event => {
       GM.setValue('id', event.target.value)
@@ -43,8 +47,8 @@
       GM.setValue('password', event.target.value)
     })
 
-    const configBoxStyle = document.createElement('style')
-    configBoxStyle.textContent = `#${configBox.id} {
+    const styleElement = document.createElement('style')
+    styleElement.textContent = `#${configBox.id} {
       inset: 0;
       margin: auto;
       position: fixed;
@@ -72,7 +76,7 @@
       margin-top: 1%;
     }`
 
-    document.head.appendChild(configBoxStyle)
+    document.head.appendChild(styleElement)
 
     let menuShown = false
     GM.registerMenuCommand('Toggle Configuration', async function () {
@@ -90,6 +94,12 @@
   if (document.title === 'PandA : Gateway : Welcome') {
     location.href += '/login'
   } else if (document.title === 'CyberLearningService Login') {
+    const errorElement = document.querySelector('.errors')
+    if (errorElement) {
+      errorElement.style.display = 'flex'
+      return
+    }
+
     const id = await GM.getValue('id')
     const password = await GM.getValue('password')
     if (id && password) {
