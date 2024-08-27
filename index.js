@@ -7,6 +7,7 @@
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO*
 // @include      /^https?://panda\.ecs\.kyoto-u\.ac\.jp/portal/?$/
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/login*
+// @match        https://panda.ecs.kyoto-u.ac.jp/cas/logout*
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM.registerMenuCommand
 // @grant        GM.setValue
@@ -118,6 +119,14 @@
   if (document.title === 'PandA : Gateway : Welcome') {
     location.href += '/login'
   } else if (document.title === 'CyberLearningService Login') {
+    // WTF the logout page has the same title
+    // Why is the logout page called Login
+    if (location.href.startsWith('https://panda.ecs.kyoto-u.ac.jp/cas/logout')) {
+      location.href = 'https://panda.ecs.kyoto-u.ac.jp/cas/login?service=https%3A%2F%2Fpanda.ecs.kyoto-u.ac.jp%2Fsakai-login-tool%2Fcontainer'
+      return
+    }
+
+    // Normal login page
     const errorElement = document.querySelector('.errors')
     if (errorElement) {
       errorElement.style.display = 'flex'
