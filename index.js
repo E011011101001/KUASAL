@@ -153,7 +153,6 @@
     if (errorElement) {
       return
     }
-    alert(1)
     const id = await GM.getValue('id')
     const password = await GM.getValue('password')
     if (id && password) {
