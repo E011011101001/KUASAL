@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.08.26-dev
+// @version      2024.08.27
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO*
 // @include      /^https?://panda\.ecs\.kyoto-u\.ac\.jp/portal/?$/
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/login*
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/logout*
+// @match        https://student.iimc.kyoto-u.ac.jp/*
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM.registerMenuCommand
 // @grant        GM.setValue
@@ -114,11 +115,7 @@
     })
   }
 
-  await register_menu()
-
-  if (document.title === 'PandA : Gateway : Welcome') {
-    location.href += '/login'
-  } else if (document.title === 'CyberLearningService Login') {
+  async function panda_login () {
     // WTF the logout page has the same title
     // Why is the logout page called Login
     if (location.href.startsWith('https://panda.ecs.kyoto-u.ac.jp/cas/logout')) {
@@ -140,5 +137,37 @@
       document.querySelector('#password').value = password
       document.querySelector('.btn-submit').click()
     }
+  }
+
+  await register_menu()
+
+  switch (document.title) {
+  case 'PandA : Gateway : Welcome':
+    location.href += '/login'
+    break
+  case 'CyberLearningService Login':
+    await panda_login()
+    break
+  case 'Kyoto University Authentication System':
+    const errorElement = document.querySelector('.output--error')
+    if (errorElement) {
+      return
+    }
+    alert(1)
+    const id = await GM.getValue('id')
+    const password = await GM.getValue('password')
+    if (id && password) {
+      document.querySelector('#username').value = id
+      document.querySelector('#password').value = password
+      document.querySelector('button').click()
+    }
+    break
+  case '全学生共通ポータル/Common Portal for All Students':
+    if (/^https:\/\/student\.iimc\.kyoto-u\.ac\.jp\/?$/.test(location.href)) {
+      document.querySelector('p a').click()
+    }
+    break
+  default:
+    break
   }
 })()
