@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.08.27-1
+// @version      2024.08.28
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO*
@@ -9,6 +9,7 @@
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/login*
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/logout*
 // @match        https://student.iimc.kyoto-u.ac.jp/*
+// @match        https://www.k.kyoto-u.ac.jp/student/*
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM.registerMenuCommand
 // @grant        GM.setValue
@@ -139,15 +140,27 @@
     }
   }
 
+  function KULASIS_better_looking () {
+    const KULASISStyle = document.createElement('style')
+    KULASISStyle.textContent = `
+      #frame {
+        margin: auto;
+      }
+    `
+    document.head.appendChild(KULASISStyle)
+  }
+
   await register_menu()
 
   switch (document.title) {
   case 'PandA : Gateway : Welcome':
     location.href += '/login'
     break
+
   case 'CyberLearningService Login':
     await panda_login()
     break
+
   case 'Kyoto University Authentication System':
     const errorElement = document.querySelector('.output--error')
     if (errorElement) {
@@ -161,11 +174,16 @@
       document.querySelector('button').click()
     }
     break
+
   case '全学生共通ポータル/Common Portal for All Students':
     if (/^https:\/\/student\.iimc\.kyoto-u\.ac\.jp\/?$/.test(location.href)) {
       document.querySelector('p a').click()
     }
     break
+  case '京都大学教務情報システム':
+    KULASIS_better_looking()
+    break
+
   default:
     break
   }
