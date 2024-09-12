@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.08.28
+// @version      2024.09.13
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
-// @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2/Redirect/SSO*
+// @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2*
 // @include      /^https?://panda\.ecs\.kyoto-u\.ac\.jp/portal/?$/
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/login*
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/logout*
