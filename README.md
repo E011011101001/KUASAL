@@ -36,3 +36,4 @@ This userscript collects **nothing**. Your ID and password are locally stored on
 - Auto redirecting to the login page (and then auto login) at
   - The PandA welcome page
   - The PandA logged out page
+- Centering KULASIS
