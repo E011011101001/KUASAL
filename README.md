@@ -11,6 +11,14 @@ Currently supporting:
 - PandA
 - IIMC websites
 
+## Features
+
+- Auto Login
+- Auto redirecting to the login page (and then auto login) at
+  - The PandA welcome page
+  - The PandA logged out page
+- Centering KULASIS
+
 ## Privacy Concerns
 
 This userscript collects **nothing**. Your ID and password are locally stored only (using `GM.setValue`).
@@ -29,11 +37,3 @@ This userscript collects **nothing**. Your ID and password are locally stored on
 2. Fill in your user ID and password in the config window and click `Confirm` or `Toggle Configuration` to save and close the window.
 
 3. The userscript will start to function from the next time you visit a supported site.
-
-## Features
-
-- Auto Login
-- Auto redirecting to the login page (and then auto login) at
-  - The PandA welcome page
-  - The PandA logged out page
-- Centering KULASIS
