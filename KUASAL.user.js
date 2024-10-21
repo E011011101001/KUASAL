@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.09.13
+// @version      2024.10.21
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2*
@@ -148,6 +148,7 @@
       }
     `
     document.head.appendChild(KULASISStyle)
+    setTimeout(_ => window.stop(), 60000) // to disable the refresh meta // remove this line if buggy
   }
 
   await register_menu()
@@ -182,6 +183,9 @@
     break
   case '京都大学教務情報システム':
     KULASIS_better_looking()
+    if (/^https:\/\/www\.k\.kyoto-u\.ac\.jp\/student\/logout_complete/.test(location.href)) {
+      history.back()
+    }
     break
 
   default:

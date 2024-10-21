@@ -18,6 +18,7 @@ Currently supporting:
   - The PandA welcome page
   - The PandA logged out page
 - Centering KULASIS
+- Prevent KULASIS from auto logging out after 30min
 
 ## Privacy Concerns
 
