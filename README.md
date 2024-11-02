@@ -10,6 +10,7 @@ An userscript example showing how to automatically login at some Kyoto Universit
 Currently supporting:
 - PandA
 - IIMC websites
+- KULIB e-Resource auth system
 
 ## Features
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2024.10.21
+// @version      2024.11.02
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2*
@@ -10,6 +10,7 @@
 // @match        https://panda.ecs.kyoto-u.ac.jp/cas/logout*
 // @match        https://student.iimc.kyoto-u.ac.jp/*
 // @match        https://www.k.kyoto-u.ac.jp/student/*
+// @match        https://kyoto-u.idm.oclc.org/login?qurl=*
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM.registerMenuCommand
 // @grant        GM.setValue
@@ -177,18 +178,25 @@
     break
 
   case '全学生共通ポータル/Common Portal for All Students':
+    // TODO: use indexOf === 0
     if (/^https:\/\/student\.iimc\.kyoto-u\.ac\.jp\/?$/.test(location.href)) {
       document.querySelector('p a').click()
     }
     break
   case '京都大学教務情報システム':
     KULASIS_better_looking()
+    // TODO: use indexOf === 0
     if (/^https:\/\/www\.k\.kyoto-u\.ac\.jp\/student\/logout_complete/.test(location.href)) {
       history.back()
     }
     break
-
   default:
+    // cannot be identified by titles
+    if(location.href.indexOf('https://kyoto-u.idm.oclc.org/login?qurl=') === 0) {
+      // 電子ジャーナル・データベース認証システム
+      document.querySelector('input[type="submit"][value="ECS-ID / SPS-ID"]').click()
+
+    }
     break
   }
 })()
