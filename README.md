@@ -18,6 +18,7 @@ Currently supporting:
 - Auto redirecting to the login page (and then auto login) at
   - The PandA welcome page
   - The PandA logged out page
+  - e-Resource auth page
 - Centering KULASIS
 - Prevent KULASIS from auto logging out after 30min
 
