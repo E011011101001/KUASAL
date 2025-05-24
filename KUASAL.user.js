@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KUASAL
 // @namespace    https://www.eolstudy.com/
-// @version      2025.04.07
+// @version      2025.05.24
 // @description  Kyoto University Authentication System Auto Login
 // @author       Eol
 // @match        https://authidp1.iimc.kyoto-u.ac.jp/idp/profile/SAML2*
@@ -11,6 +11,7 @@
 // @match        https://student.iimc.kyoto-u.ac.jp/*
 // @match        https://www.k.kyoto-u.ac.jp/student/*
 // @match        https://kyoto-u.idm.oclc.org/login?qurl=*
+// @match        https://kyoto-u.idm.oclc.org/login?url=*
 // @match        https://login.kyoto-u.idm.oclc.org/*
 // @icon         https://authidp1.iimc.kyoto-u.ac.jp/idp/images/logo.png
 // @grant        GM.registerMenuCommand
@@ -194,8 +195,8 @@
   default:
     // cannot be identified by titles
     if(
-      location.href.indexOf('https://kyoto-u.idm.oclc.org/login?qurl=') === 0 ||
-      location.href.indexOf('https://login.kyoto-u.idm.oclc.org/login?qurl=') === 0
+      location.href.indexOf('https://kyoto-u.idm.oclc.org/login?') === 0 ||
+      location.href.indexOf('https://login.kyoto-u.idm.oclc.org/login?') === 0
     ) {
       // 電子ジャーナル・データベース認証システム
       document.querySelector('input[type="submit"][value="ECS-ID / SPS-ID"]').click()
